@@ -123,15 +123,16 @@ return {
       ---@type table<string, vim.lsp.Config>
       local servers = {
         -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
+        gopls = {},
+        pyright = {},
         -- rust_analyzer = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {},
+        --
 
         stylua = {}, -- Used to format Lua code
 
@@ -163,8 +164,21 @@ return {
           end,
           ---@type lspconfig.settings.lua_ls
           settings = {
+            runtime = { version = 'LuaJIT' },
             Lua = {
-              format = { enable = false }, -- Disable formatting (formatting is done by stylua)
+              workspace = {
+                checkThirdParty = false,
+                library = {
+                  '${3rd}/luv/library',
+                  unpack(vim.api.nvim_get_runtime_file('', true)),
+                  vim.api.nvim_set_option_value,
+                },
+              },
+              completion = {
+                callSnippet = 'Replace',
+              },
+              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+              -- diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
