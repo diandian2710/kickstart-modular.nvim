@@ -164,16 +164,7 @@ return {
           end,
           ---@type lspconfig.settings.lua_ls
           settings = {
-            runtime = { version = 'LuaJIT' },
             Lua = {
-              workspace = {
-                checkThirdParty = false,
-                library = {
-                  '${3rd}/luv/library',
-                  unpack(vim.api.nvim_get_runtime_file('', true)),
-                  vim.api.nvim_set_option_value,
-                },
-              },
               completion = {
                 callSnippet = 'Replace',
               },
